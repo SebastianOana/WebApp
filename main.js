@@ -155,6 +155,7 @@ function setupAutoUpdater() {
     
     autoUpdater.on('update-not-available', (info) => {
         console.log('Update not available.');
+        if (mainWindow) mainWindow.webContents.send('update-not-available');
     });
     
     autoUpdater.on('error', (err) => {
