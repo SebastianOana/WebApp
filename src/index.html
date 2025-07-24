@@ -11,7 +11,12 @@
     <div class="app-container">
         <header class="app-header">
             <h1>💰 Calculator Venituri</h1>
-            <div class="header-controls">
+            <div class="header-row">
+                <div class="month-controls">
+                    <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
+                    <span class="current-month" id="currentMonth"></span>
+                    <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
+                </div>
                 <div class="theme-controls">
                     <select class="theme-selector" id="themeSelector" onchange="changeTheme(this.value)">
                         <option value="default">Tema Implicită</option>
@@ -22,12 +27,8 @@
                     </select>
                 </div>
             </div>
-            <div class="month-controls">
-                <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
-                <span class="current-month" id="currentMonth"></span>
-                <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
-            </div>
-            <div class="save-controls">
+            <div class="action-controls">
+                <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Check for Updates</button>
                 <button class="save-btn" onclick="saveCurrentMonth()">💾 Salvează Luna</button>
             </div>
         </header>
