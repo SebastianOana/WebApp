@@ -1,27 +1,23 @@
-// Listen for update-not-available event and show notification
-if (typeof window !== 'undefined' && window.require) {
-  try {
-    const { ipcRenderer } = window.require('electron');
-    ipcRenderer.on('update-not-available', () => {
-      showPopupMessage('✅ Aplicația este la zi!');
-    });
+// Listen for update-not-available event and show notification (using preload API)
+if (window.electronAPI && window.electronAPI.onUpdateNotAvailable) {
+  window.electronAPI.onUpdateNotAvailable(() => {
+    showPopupMessage('🎉 No new updates, everything is up to date! 🚀😎');
+  });
+}
+
 // Show a transient popup message (like save notification)
 function showPopupMessage(message) {
-    const popup = document.createElement('div');
-    popup.className = 'popup-message';
-    popup.textContent = message;
-    document.body.appendChild(popup);
-    setTimeout(() => {
-        popup.classList.add('show');
-    }, 10);
-    setTimeout(() => {
-        popup.classList.remove('show');
-        setTimeout(() => popup.remove(), 400);
-    }, 2200);
-}
-  } catch (error) {
-    // Ignore if not in Electron
-  }
+  const popup = document.createElement('div');
+  popup.className = 'popup-message';
+  popup.textContent = message;
+  document.body.appendChild(popup);
+  setTimeout(() => {
+    popup.classList.add('show');
+  }, 10);
+  setTimeout(() => {
+    popup.classList.remove('show');
+    setTimeout(() => popup.remove(), 400);
+  }, 2200);
 }
 // Update Button Handler
 window.addEventListener('DOMContentLoaded', () => {
@@ -30,13 +26,20 @@ window.addEventListener('DOMContentLoaded', () => {
     updateBtn.addEventListener('click', () => {
       updateBtn.disabled = true;
       updateBtn.textContent = 'Checking...';
-      window.electronAPI.checkForUpdates().finally(() => {
-        setTimeout(() => {
-          updateBtn.disabled = false;
-          updateBtn.textContent = 'Check for Updates';
-        }, 2000);
-      });
+      window.electronAPI.checkForUpdates();
     });
+
+    // Reset button state on update events
+    const resetUpdateBtn = () => {
+      setTimeout(() => {
+        updateBtn.disabled = false;
+        updateBtn.textContent = 'Check for Updates';
+      }, 2000);
+    };
+    if (window.electronAPI.onUpdateAvailable) window.electronAPI.onUpdateAvailable(resetUpdateBtn);
+    if (window.electronAPI.onUpdateDownloaded) window.electronAPI.onUpdateDownloaded(resetUpdateBtn);
+    if (window.electronAPI.onUpdateNotAvailable) window.electronAPI.onUpdateNotAvailable(resetUpdateBtn);
+    if (window.electronAPI.onUpdateError) window.electronAPI.onUpdateError(resetUpdateBtn);
   }
 });
 // Global variables to store calculation results

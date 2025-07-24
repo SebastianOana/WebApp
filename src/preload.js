@@ -1,16 +1,12 @@
-// This file enables persistent storage for your Electron app using electron-store
-const Store = require('electron-store');
+// Preload script for Electron (exposes safe APIs to renderer)
+// Do NOT require electron-store or node modules here!
+
 const { contextBridge, ipcRenderer } = require('electron');
 
-const store = new Store();
-
-contextBridge.exposeInMainWorld('electronStore', {
-  get: (key) => store.get(key),
-  set: (key, value) => store.set(key, value),
-  delete: (key) => store.delete(key)
-});
-
-// Expose update API for renderer (update button)
 contextBridge.exposeInMainWorld('electronAPI', {
-  checkForUpdates: () => ipcRenderer.invoke('check-for-updates')
+  checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
+  onUpdateAvailable: (callback) => ipcRenderer.on('update-available', callback),
+  onUpdateDownloaded: (callback) => ipcRenderer.on('update-downloaded', callback),
+  onUpdateNotAvailable: (callback) => ipcRenderer.on('update-not-available', callback),
+  onUpdateError: (callback) => ipcRenderer.on('update-error', callback)
 });

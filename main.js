@@ -197,15 +197,7 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 function checkForUpdates() {
-    if (mainWindow) {
-        dialog.showMessageBox(mainWindow, {
-            type: 'info',
-            title: 'Checking for Updates',
-            message: 'Checking for updates...',
-            detail: 'Please wait while we check for the latest version.',
-            buttons: ['OK']
-        });
-    }
+    // Removed dialog so only the in-app popup is shown
     
     autoUpdater.checkForUpdatesAndNotify().then((result) => {
         if (!result || !result.updateInfo) {
