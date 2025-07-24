@@ -211,13 +211,7 @@ function checkForUpdates() {
             // No updates available
             setTimeout(() => {
                 if (mainWindow) {
-                    dialog.showMessageBox(mainWindow, {
-                        type: 'info',
-                        title: 'No Updates',
-                        message: 'You are running the latest version!',
-                        detail: 'Your Calculator Venituri is up to date.',
-                        buttons: ['OK']
-                    });
+                    mainWindow.webContents.send('update-not-available');
                 }
             }, 1000);
         }

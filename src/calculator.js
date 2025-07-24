@@ -1,3 +1,14 @@
+// Listen for update-not-available event and show notification
+if (typeof window !== 'undefined' && window.require) {
+  try {
+    const { ipcRenderer } = window.require('electron');
+    ipcRenderer.on('update-not-available', () => {
+      showNotification('✅ Aplicația este la zi!');
+    });
+  } catch (error) {
+    // Ignore if not in Electron
+  }
+}
 // Update Button Handler
 window.addEventListener('DOMContentLoaded', () => {
   const updateBtn = document.getElementById('checkUpdateBtn');
