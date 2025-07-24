@@ -1,3 +1,25 @@
+/* Popup message for notifications (like save, update, etc.) */
+.popup-message {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    background: var(--button-info);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2000;
+    transition: opacity 0.35s, transform 0.35s;
+}
+.popup-message.show {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
 /* Update Button Styles */
 .update-btn {
   position: fixed;

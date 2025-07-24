@@ -3,8 +3,22 @@ if (typeof window !== 'undefined' && window.require) {
   try {
     const { ipcRenderer } = window.require('electron');
     ipcRenderer.on('update-not-available', () => {
-      showNotification('✅ Aplicația este la zi!');
+      showPopupMessage('✅ Aplicația este la zi!');
     });
+// Show a transient popup message (like save notification)
+function showPopupMessage(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup-message';
+    popup.textContent = message;
+    document.body.appendChild(popup);
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 10);
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 400);
+    }, 2200);
+}
   } catch (error) {
     // Ignore if not in Electron
   }
