@@ -38,7 +38,8 @@ function createWindow() {
         mainWindow = null;
     });
 
-    // Set up auto updater
+    // Set up auto updater event listeners
+    setupAutoUpdater();
     // Auto-update: check for updates on app ready
     mainWindow.webContents.on('did-finish-load', () => {
         if (process.env.NODE_ENV !== 'development') {
