@@ -1,7 +1,7 @@
 {
   "name": "income-calculator",
   "productName": "Income Calculator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A desktop application for calculating income, taxes, and tracking expenses",
   "main": "main.js",
   "author": "Your Name",
