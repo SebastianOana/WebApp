@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Venituri</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>💰 Calculator Venituri</h1>
+            <div class="header-controls">
+                <div class="theme-controls">
+                    <select class="theme-selector" id="themeSelector" onchange="changeTheme(this.value)">
+                        <option value="default">Tema Implicită</option>
+                        <option value="dark">Întunecat</option>
+                        <option value="forest">Pădure</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="sunset">Apus</option>
+                    </select>
+                </div>
+            </div>
+            <div class="month-controls">
+                <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
+                <span class="current-month" id="currentMonth"></span>
+                <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
+            </div>
+            <div class="save-controls">
+                <button class="save-btn" onclick="saveCurrentMonth()">💾 Salvează Luna</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="calculator-grid">
+                <!-- Monthly Salary Calculator -->
+                <div class="card">
+                    <h3>Salariu Lunar</h3>
+                    <div class="input-group">
+                        <label for="monthlySalary">Salariu Lunar (RON)</label>
+                        <input type="number" id="monthlySalary" placeholder="0" step="100">
+                    </div>
+                    <div class="result" id="salaryResult"></div>
+                    
+                    <!-- Additional Income in same card -->
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e9ecef;">
+                        <h4 style="margin-bottom: 15px; font-size: 1rem;">Venituri Suplimentare</h4>
+                        
+                        <div class="input-group">
+                            <label for="bonuriMasa">🍽️ Bonuri de masă (RON)</label>
+                            <input type="number" id="bonuriMasa" placeholder="0" step="50">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="transport">🚗 Transport (RON)</label>
+                            <input type="number" id="transport" placeholder="0" step="50">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="telemunca">💻 Telemuncă (RON)</label>
+                            <input type="number" id="telemunca" placeholder="0" step="50">
+                        </div>
+                        
+                            <div class="result additional-income-data" id="additionalIncomeResult"></div>
+                    </div>
+                </div>
+
+                <!-- Expense Tracker -->
+                <div class="card wide">
+                    <h3>Cheltuieli Lunare</h3>
+                    
+                    <!-- Lunare Section -->
+                    <div class="expense-section">
+                        <h4>💡 Lunare</h4>
+                        <div class="expense-grid" id="expenseListLunare">
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Chirie">
+                                <input type="number" class="expense-amount" placeholder="0" step="0.01">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Gaz">
+                                <input type="number" class="expense-amount" placeholder="0" step="0.01">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Curent">
+                                <input type="number" class="expense-amount" placeholder="0" step="0.01">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Întreținere">
+                                <input type="number" class="expense-amount" placeholder="0" step="0.01">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                        </div>
+                        <button class="add-btn" onclick="addExpense('expenseListLunare')">+ Adaugă</button>
+                    </div>
+
+                    <!-- Abonamente Section -->
+                    <div class="expense-section">
+                        <h4>📱 Abonamente</h4>
+                        <div class="expense-grid" id="expenseListAbonamente">
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Netflix">
+                                <input type="number" class="expense-amount" placeholder="60" step="0.01" value="60">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                            <div class="expense-row">
+                                <span class="drag-handle" draggable="true">⋮⋮</span>
+                                <input type="text" class="expense-name" value="Spotify">
+                                <input type="number" class="expense-amount" placeholder="20" step="0.01">
+                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                            </div>
+                        </div>
+                        <button class="add-btn" onclick="addExpense('expenseListAbonamente')">+ Adaugă</button>
+                    </div>
+
+                    <div class="result" id="expenseResult">
+                        <div class="cheltuieli-breakdown">
+                            <div class="lunare-block">
+                                <span class="chelt-label">💡 Lunare: <span id="lunareTotal">0 RON</span></span>
+                                <ul id="lunareList" style="margin:0; padding-left:18px;"></ul>
+                            </div>
+                            <div class="abonamente-block">
+                                <span class="chelt-label">📱 Abonamente: <span id="abonamenteTotal">0 RON</span></span>
+                                <ul id="abonamenteList" style="margin:0; padding-left:18px;"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <h3>Sumar Financiar</h3>
+                <div class="summary-grid">
+                    <div class="summary-item" id="summaryItemWeekly">
+                        <span class="summary-label">Săptămânal:</span>
+                        <span class="summary-value" id="summaryWeekly">0 RON</span>
+                    </div>
+                    <div class="summary-item" id="summaryItemMonthly">
+                        <span class="summary-label">Lunar:</span>
+                        <span class="summary-value" id="summaryMonthly">0 RON</span>
+                    </div>
+                    <div class="summary-item" id="summaryItemAdditional">
+                        <span class="summary-label">Transport + Telemuncă:</span>
+                        <span class="summary-value" id="summaryAdditional">0 RON</span>
+                    </div>
+                    <div class="summary-item" id="summaryItemTotal">
+                        <span class="summary-label">Total venituri:</span>
+                        <span class="summary-value" id="summaryTotal">0 RON</span>
+                    </div>
+                    <div class="summary-item highlight" id="summaryItemAfterExpenses">
+                        <span class="summary-label">Rămas după cheltuieli:</span>
+                        <span class="summary-value" id="summaryAfterExpenses">0 RON</span>
+                    </div>
+                    <div class="summary-item voucher-highlight" id="summaryItemBonuriMasa">
+                        <span class="summary-label">🍽️ Bonuri de masă:</span>
+                        <span class="summary-value" id="summaryBonuriMasa">0 RON</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <h3>📊 Istoric Lunar</h3>
+                <div class="history-controls">
+                    <button class="history-btn" onclick="toggleHistory()">Afișează/Ascunde Istoric</button>
+                </div>
+                <div class="history-container" id="historyContainer" style="display: none;">
+                    <div class="history-list" id="historyList">
+                        <p class="no-history">Nu există date salvate încă.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>

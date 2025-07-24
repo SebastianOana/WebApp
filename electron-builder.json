@@ -1,0 +1,21 @@
+{
+  "appId": "com.income.calculator",
+  "productName": "Income Calculator",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "main.js",
+    "src/**/*",
+    "package.json"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "icon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}
