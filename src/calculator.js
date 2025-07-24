@@ -1,3 +1,19 @@
+// Update Button Handler
+window.addEventListener('DOMContentLoaded', () => {
+  const updateBtn = document.getElementById('checkUpdateBtn');
+  if (updateBtn && window.electronAPI && window.electronAPI.checkForUpdates) {
+    updateBtn.addEventListener('click', () => {
+      updateBtn.disabled = true;
+      updateBtn.textContent = 'Checking...';
+      window.electronAPI.checkForUpdates().finally(() => {
+        setTimeout(() => {
+          updateBtn.disabled = false;
+          updateBtn.textContent = 'Check for Updates';
+        }, 2000);
+      });
+    });
+  }
+});
 // Global variables to store calculation results
 let currentCalculations = {
     daily: 0,

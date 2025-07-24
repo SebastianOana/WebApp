@@ -1,3 +1,24 @@
+/* Update Button Styles */
+.update-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  background: linear-gradient(90deg, #4caf50 0%, #2196f3 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.update-btn:hover {
+  background: linear-gradient(90deg, #2196f3 0%, #4caf50 100%);
+  box-shadow: 0 4px 16px rgba(33,150,243,0.15);
+}
 [data-theme="dark"] .expense-row {
   background: #23262b;
   border-color: #3c3c43;
