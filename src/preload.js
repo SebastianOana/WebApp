@@ -9,3 +9,8 @@ contextBridge.exposeInMainWorld('electronStore', {
   set: (key, value) => store.set(key, value),
   delete: (key) => store.delete(key)
 });
+
+// Expose update API for renderer (update button)
+contextBridge.exposeInMainWorld('electronAPI', {
+  checkForUpdates: () => ipcRenderer.invoke('check-for-updates')
+});
