@@ -8,28 +8,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <!-- Theme animated backgrounds -->
+    <div class="sun-bg">
+      <div class="sun"></div>
+    </div>
     <div class="app-container">
         <header class="app-header">
-            <h1>💰 Calculator Venituri</h1>
-            <div class="header-row">
-                <div class="month-controls">
-                    <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
-                    <span class="current-month" id="currentMonth"></span>
-                    <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
-                </div>
-                <div class="theme-controls">
-                    <select class="theme-selector" id="themeSelector" onchange="changeTheme(this.value)">
-                        <option value="default">Tema Implicită</option>
-                        <option value="dark">Întunecat</option>
-                        <option value="forest">Pădure</option>
-                        <option value="ocean">Ocean</option>
-                        <option value="sunset">Apus</option>
-                    </select>
-                </div>
+            <div class="menu-bar">
+                <select class="theme-selector" id="themeSelector" onchange="changeTheme(this.value)">
+                    <option value="default">Tema Implicită</option>
+                    <option value="dark">Întunecat</option>
+                    <option value="forest">Pădure</option>
+                    <option value="ocean">Ocean</option>
+                    <option value="sunset">Apus</option>
+                </select>
+                <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Update?</button>
+                <button class="save-btn" onclick="saveCurrentMonth()">Salvează Luna</button>
             </div>
-            <div class="action-controls">
-                <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Check for Updates</button>
-                <button class="save-btn" onclick="saveCurrentMonth()">💾 Salvează Luna</button>
+            <h1>💰 Calculator Venituri</h1>
+            <div class="month-controls">
+                <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
+                <span class="current-month" id="currentMonth"></span>
+                <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
             </div>
         </header>
 
@@ -185,6 +185,5 @@
     </div>
 
     <script src="calculator.js"></script>
-    <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Check for Updates</button>
 </body>
 </html>

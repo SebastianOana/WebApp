@@ -1,4 +1,6 @@
-/* Popup message styles */
+/* =========================
+   POPUP MESSAGE STYLES
+========================= */
 .popup-message {
   position: fixed;
   top: 60px;
@@ -20,12 +22,21 @@
   opacity: 1;
   transform: translateY(0);
 }
-/* Update Button Styles */
+/* =========================
+   TOP ACTIONS & BUTTONS
+========================= */
+.top-actions {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
 .update-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
   background: linear-gradient(90deg, #4caf50 0%, #2196f3 100%);
   color: #fff;
   border: none;
@@ -41,6 +52,23 @@
   background: linear-gradient(90deg, #2196f3 0%, #4caf50 100%);
   box-shadow: 0 4px 16px rgba(33,150,243,0.15);
 }
+
+.save-btn {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.save-btn:hover {
+  background: linear-gradient(135deg, #138496, #117a8b);
+  box-shadow: 0 4px 16px rgba(23,162,184,0.15);
+}
 [data-theme="dark"] .expense-row {
   background: #23262b;
   border-color: #3c3c43;
@@ -51,14 +79,14 @@
 [data-theme="dark"] #additionalIncomeResult span {
   color: #fff;
 }
-/* Add color control for additional income data */
+/* Additional Income Data Color */
 .additional-income-data {
   color: #111;
 }
 [data-theme="dark"] .additional-income-data {
   color: #fff;
 }
-/* Save controls right alignment */
+/* Save Controls Alignment */
 .save-controls {
     display: flex;
     justify-content: flex-end;
@@ -67,7 +95,7 @@
     margin-top: 15px;
     margin-bottom: 0;
 }
-/* Reset and base styles */
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -75,8 +103,11 @@
 }
 
 :root {
-    --bg-gradient: linear-gradient(135deg, #e3f2fd 0%, #fffde7 100%);
-    --card-bg: linear-gradient(135deg, #f9fafc 60%, #e3f2fd 100%);
+/* =========================
+   THEME VARIABLES
+========================= */
+    --bg-gradient: linear-gradient(135deg, #e3f2fd 0%, #fceabb 60%, #fffde7 100%);
+    --card-bg: linear-gradient(135deg, #f9fafc 60%, #fceabb 100%);
     --text-color: #212121;
     --text-light: #757575;
     --border-color: #e0e0e0;
@@ -92,11 +123,13 @@
     --result-color: #212121;
 }
 
-/* Dark theme */
+/* =========================
+   Theme Variables & Dark Theme
+========================= */
 /* Dark theme: fully independent */
 [data-theme="dark"] {
-    --bg-gradient: linear-gradient(135deg, #23272e 0%, #2c313a 100%);
-    --card-bg: linear-gradient(135deg, #23272e 60%, #181a1b 100%);
+    --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+    --card-bg: linear-gradient(135deg, #232526 60%, #414345 100%);
     --text-color: #f5f5f5;
     --text-light: #b0bec5;
     --border-color: #3c3c43;
@@ -128,13 +161,10 @@
     background: #181a1b !important;
     border-color: #23272b !important;
 }
-
-/* Forest theme */
-/* Forest theme: fully independent */
 /* Forest theme: softened gradients and colors for comfort */
 [data-theme="forest"] {
-    --bg-gradient: linear-gradient(135deg, #c8e6c9 0%, #81c784 60%, #388e3c 100%);
-    --card-bg: linear-gradient(135deg, #e8f5e9 70%, #c8e6c9 100%);
+    --bg-gradient: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+    --card-bg: linear-gradient(135deg, #e8f5e9 70%, #a8e063 100%);
     --text-color: #355c3a;
     --text-light: #607d8b;
     --border-color: #b2dfdb;
@@ -149,13 +179,10 @@
     --result-border: #b2dfdb;
     --result-color: #355c3a;
 }
-
-/* Ocean theme */
-/* Ocean theme: fully independent */
 /* Ocean theme: softened gradients and colors for comfort */
 [data-theme="ocean"] {
-    --bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #4dd0e1 60%, #0288d1 100%);
-    --card-bg: linear-gradient(135deg, #e0f7fa 80%, #b3e5fc 100%);
+    --bg-gradient: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    --card-bg: linear-gradient(135deg, #e0f7fa 80%, #43cea2 100%);
     --text-color: #22577a;
     --text-light: #607d8b;
     --border-color: #b3e5fc;
@@ -170,12 +197,10 @@
     --result-border: #b3e5fc;
     --result-color: #22577a;
 }
-/* Sunset theme */
-/* Sunset theme: fully independent */
 /* Sunset theme: softened gradients and colors for comfort */
 [data-theme="sunset"] {
-    --bg-gradient: linear-gradient(135deg, #fff3e0 0%, #ffb74d 60%, #f44336 100%);
-    --card-bg: linear-gradient(135deg, #fff3e0 80%, #ffe0b2 100%);
+    --bg-gradient: linear-gradient(135deg, #ff9966 0%, #ff5e62 60%, #ffc371 100%);
+    --card-bg: linear-gradient(135deg, #fff3e0 80%, #ff9966 100%);
     --text-color: #6d4c41;
     --text-light: #ffccbc;
     --border-color: #ffe0b2;
@@ -190,28 +215,25 @@
     --result-border: #ffe0b2;
     --result-color: #6d4c41;
 }
-/* White theme */
-/* White theme: fully independent */
 /* White theme: softened gradients and colors for comfort */
-[data-theme="white"] {
-    --bg-gradient: linear-gradient(135deg, #fafafa 0%, #e9ecef 100%);
-    --card-bg: linear-gradient(135deg, #ffffff 80%, #f5f5f5 100%);
-    --text-color: #212121;
-    --text-light: #757575;
-    --border-color: #e0e0e0;
-    --button-primary: linear-gradient(135deg, #42a5f5, #1976d2);
-    --button-secondary: linear-gradient(135deg, #81c784, #388e3c);
-    --button-danger: linear-gradient(135deg, #ef5350, #d32f2f);
-    --button-info: linear-gradient(135deg, #03a9f4, #0288d1);
-    --shadow: rgba(33, 33, 33, 0.07);
-    --input-bg: #fafafa;
-    --input-border: #e0e0e0;
-    --result-bg: #f5f5f5;
-    --result-border: #e0e0e0;
-    --result-color: #212121;
+
+:root .app-header h1 {
+    color: #111 ;
+}
+
+/* Header title should be white for all non-default themes, including white */
+[data-theme="dark"] .app-header h1,
+[data-theme="forest"] .app-header h1,
+[data-theme="ocean"] .app-header h1,
+[data-theme="sunset"] .app-header h1,
+[data-theme="white"] .app-header h1 {
+    color: white !important;
 }
 
 body {
+/* =========================
+   BODY & GENERAL LAYOUT
+========================= */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--bg-gradient) !important;
     min-height: 100vh;
@@ -220,10 +242,119 @@ body {
     transition: all 0.3s ease;
 }
 
+
+[data-theme="ocean"] body {
+    background: linear-gradient(120deg, #43cea2 0%, #185a9d 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+[data-theme="ocean"] .ocean-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes fishSwim {
+    0% { transform: translateX(-10vw) scaleX(1); }
+    50% { transform: translateX(90vw) scaleX(1.1); }
+    100% { transform: translateX(-10vw) scaleX(1); }
+}
+@keyframes algaeWave {
+    0% { transform: scaleY(1) rotate(-2deg); }
+    50% { transform: scaleY(1.1) rotate(2deg); }
+    100% { transform: scaleY(1) rotate(-2deg); }
+}
+
+[data-theme="forest"] body {
+    background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+[data-theme="forest"] .forest-bg {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 40vh;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes treeSway {
+    0% { transform: scaleY(1) rotate(-1deg); }
+    50% { transform: scaleY(1.05) rotate(2deg); }
+    100% { transform: scaleY(1) rotate(-1deg); }
+}
+
+
+/* Sunset theme: sun and cloud SVG background */
+/* Sunset theme: big sunset, rays from below */
+[data-theme="sunset"] body {
+    background: linear-gradient(120deg, #ff9966 0%, #ff5e62 60%, #ffc371 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+[data-theme="sunset"] .sunset-bg {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 50vh;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes sunsetRays {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+/* Add .sunset-bg markup in HTML, see instructions below */
+
+/* Dark theme: stars SVG background */
+/* Dark theme: moon, stars, shooting stars */
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+[data-theme="dark"] .dark-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+@keyframes shootingStar {
+    0% { transform: translateX(-10vw) translateY(0) scaleX(1); opacity: 0; }
+    10% { opacity: 1; }
+    80% { transform: translateX(90vw) translateY(20vh) scaleX(1.2); opacity: 1; }
+    100% { opacity: 0; }
+}
+/* Add .dark-bg markup in HTML, see instructions below */
+
+/* White theme: minimal geometric SVG background */
+/* Tematica Implicita: sun and rays */
+[data-theme="white"] body {
+    background: linear-gradient(135deg, #fffde7 0%, #fceabb 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+[data-theme="white"] .sun-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes sunRays {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+/* Add .sun-bg markup in HTML, see instructions below */
+
 .app-container {
+/* =========================
+   APP CONTAINER & HEADER
+========================= */
     max-width: 1000px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 0 15px;
     background: none !important;
 }
 
@@ -231,6 +362,8 @@ body {
 .app-header {
     color: white;
     margin-bottom: 20px;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -238,24 +371,52 @@ body {
     gap: 15px;
 }
 
-
-.app-header h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
-    color: var(--text-color);
-}
-
-.header-controls {
-    order: 1;
+.menu-bar {
+    width: 100%;
+    background: linear-gradient(135deg, var(--bg-gradient), rgba(255,255,255,0.18) 100%);
+    border-radius: 18px;
+    box-shadow: none;
+    margin-bottom: 10px;
+    margin-top: 0;
     display: flex;
     align-items: center;
+    padding: 0 18px;
+    height: 44px;
     gap: 10px;
-    align-self: flex-end;
+    border: none;
+    position: relative;
+    top: 0;
 }
-
+.menu-bar .theme-selector,
+.menu-bar .save-btn {
+    background: rgba(255,255,255,0.45);
+    color: var(--text-color);
+    border: none;
+    padding: 7px 14px;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+.menu-bar .theme-selector:focus,
+.menu-bar .save-btn:focus {
+    background: rgba(255,255,255,0.65);
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.12);
+}
+.menu-bar .save-btn:hover {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(23,162,184,0.18);
+}
+.menu-bar .theme-selector {
+    margin-left: 0;
+    min-width: 140px;
+}
 .theme-selector {
+    margin-left: 12px;
     background: var(--input-bg);
     color: var(--text-color);
     border: 1px solid var(--input-border);
@@ -265,7 +426,12 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
+/* Make theme selector text white in dark theme */
+[data-theme="dark"] .theme-selector,
+[data-theme="dark"] .theme-selector option {
+    color: #fff !important;
+    background: #181a1b !important;
+}
 .theme-selector:focus {
     outline: none;
     border-color: var(--button-secondary);
@@ -297,6 +463,9 @@ body {
 
 /* Month controls */
 .month-controls {
+/* =========================
+   MONTH CONTROLS
+========================= */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -336,8 +505,13 @@ body {
     min-width: 150px;
     text-align: center;
 }
-/* Dark theme: .current-month text is black for contrast */
-[data-theme="dark"] .current-month {
+
+/* Current month text should be white for all non-default themes, including white */
+[data-theme="dark"] .current-month,
+[data-theme="forest"] .current-month,
+[data-theme="ocean"] .current-month,
+[data-theme="sunset"] .current-month,
+[data-theme="white"] .current-month {
     color: white !important;
 }
 
@@ -352,6 +526,9 @@ body {
 
 /* Main content */
 .main-content {
+/* =========================
+   MAIN CONTENT & CARDS
+========================= */
     background: var(--card-bg);
     border-radius: 12px;
     padding: 20px;
@@ -373,12 +550,12 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
-    margin-bottom: 20px;
-}
-
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+    }
 /* Cards */
 .card {
-    background: var(--card-bg);
+    background: #fff;
     border-radius: 8px;
     padding: 15px;
     border: 1px solid var(--border-color);
@@ -406,6 +583,9 @@ body {
 
 /* History controls layout and buttons */
 .history-controls {
+/* =========================
+   HISTORY CONTROLS & SECTION
+========================= */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -489,8 +669,34 @@ body {
 
 /* Only style .history-controls button:hover for current UI */
 .history-controls button:hover {
+/* =========================
+   EXPENSE BREAKDOWN
+========================= */
     filter: brightness(1.1);
     box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* --- THEME ANIMATED BACKGROUNDS --- */
+/* Tematica Implicita (white theme) */
+.sun-bg .sun {
+  position: absolute;
+  top: 8vh; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, #ffe082 80%, #fffde7 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 80px 40px #ffe08288;
+}
+/* Dark theme */
+/* Dark theme: moon in same place as sun */
+.dark-bg .moon {
+  position: absolute;
+  top: 8vh; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at 60% 40%, #fff 80%, #b0bec5 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 80px 40px #b0bec588;
 }
 
 .history-controls input[type="checkbox"] {
@@ -533,6 +739,9 @@ body {
 /* Removed orphaned property lines and unmatched closing braces */
 
 .input-group {
+/* =========================
+   INPUT GROUPS & ROWS
+========================= */
     margin-bottom: 12px;
     flex: 1;
 }
@@ -566,6 +775,9 @@ body {
 
 /* Buttons */
 .calculate-btn {
+/* =========================
+   BUTTONS
+========================= */
     background: var(--button-secondary);
     color: white;
     border: none;
@@ -629,6 +841,9 @@ body {
 
 /* Expense controls */
 .expense-controls {
+/* =========================
+   EXPENSE CONTROLS & SECTIONS
+========================= */
     display: flex;
     gap: 10px;
     margin-top: 12px;
@@ -638,7 +853,7 @@ body {
 .expense-section {
     margin-bottom: 20px;
     padding: 15px;
-    background: var(--card-bg);
+    background: #fff;
     border-radius: 8px;
     border: 1px solid var(--border-color);
 }
@@ -646,7 +861,7 @@ body {
 .expense-section h4 {
     font-size: 1rem;
     margin-bottom: 12px;
-    color: black    ;
+    color: black;
     border-bottom: 1px solid #e9ecef;
     padding-bottom: 5px;
     text-align: center;
@@ -802,6 +1017,9 @@ body {
 
 /* Results */
 .result {
+/* =========================
+   RESULTS & SUMMARY
+========================= */
     margin-top: 12px;
     padding: 12px;
     background: var(--result-bg);
@@ -921,6 +1139,9 @@ body {
 
 /* End of file: removed unmatched closing brace */
 .history-list {
+/* =========================
+   HISTORY LIST & MONTH CARDS
+========================= */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 22px;
