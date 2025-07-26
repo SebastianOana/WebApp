@@ -710,7 +710,9 @@ function saveCurrentMonth() {
     // Immediately reload historyData from localStorage to keep in sync
     historyData = JSON.parse(localStorage.getItem('incomeHistory')) || {};
     // Show confirmation
-    showNotification('✅ Datele pentru ' + formatMonthDisplay() + ' au fost salvate!');
+    const lang = currentLang;
+    const t = translations[lang];
+    showNotification(`${t.saveSuccess.replace('!', '')} (${formatMonthDisplay()})!`);
 }
 
 // Load month data
