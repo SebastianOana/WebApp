@@ -24,6 +24,14 @@
   font-size: 1.08em;
   margin-left: 10px;
 }
+
+/* Dark theme overrides for salary and additional cards */
+[data-theme="dark"] .salary-card .result-label,
+[data-theme="dark"] .salary-card .result-value,
+[data-theme="dark"] .additional-card .result-label,
+[data-theme="dark"] .additional-card .result-value {
+  color: #fff !important;
+}
 /* removed stray font-size and brace */
 @media (max-width: 600px) {
   .salary-card, .additional-card {
@@ -55,6 +63,11 @@
 .lang-btn:hover {
   background: rgba(227, 230, 237, 0.38);
   box-shadow: 0 4px 16px rgba(33,150,243,0.3);
+}
+
+/* Make language toggle button text white in dark theme */
+[data-theme="dark"] .lang-btn {
+  color: #fff !important;
 }
 /* =========================
    POPUP MESSAGE STYLES
