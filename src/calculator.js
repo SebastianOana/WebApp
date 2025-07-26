@@ -1,7 +1,180 @@
+// --- TRANSLATION LOGIC ---
+const translations = {
+  ro: {
+    updateBtn: 'Verifică Actualizările',
+    appTitle: '💰 Calculator Venituri',
+    saveMonth: 'Salvează Luna',
+    langToggle: 'EN',
+    previousMonth: '← Luna Anterioară',
+    nextMonth: 'Luna Următoare →',
+    salaryTitle: 'Salariu Lunar',
+    salaryLabel: '📅Salariu Lunar',
+    additionalIncomeTitle: '💼Venituri Suplimentare',
+    bonuriLabel: '🍽️ Bonuri de masă',
+    transportLabel: '🚗 Transport',
+    telemuncaLabel: '💻 Telemuncă',
+    expenseTitle: 'Cheltuieli Lunare',
+    lunareTitle: '💡 Lunare',
+    abonamenteTitle: '📱 Abonamente',
+    addBtn: '+ Adaugă',
+    lunareLabel: '💡 Lunare:',
+    abonamenteLabel: '📱 Abonamente:',
+    summaryTitle: 'Sumar Financiar',
+    summaryWeekly: 'Săptămânal:',
+    summaryMonthly: 'Lunar:',
+    summaryAdditional: 'Transport + Telemuncă:',
+    summaryTotal: 'Total venituri:',
+    summaryAfterExpenses: 'Rămas după cheltuieli:',
+    summaryBonuriMasa: '🍽️ Bonuri de masă:',
+    historyTitle: '📊 Istoric Lunar',
+    toggleHistory: 'Afișează/Ascunde Istoric',
+    noHistory: 'Nu există date salvate încă.',
+    saveSuccess: '✅ Datele au fost salvate!',
+    updateSuccess: '🎉 Nu există actualizări noi, totul este la zi! 🚀😎',
+    checking: 'Se verifică actualizările...',
+    perDay: 'Pe zi:',
+    perWeek: 'Pe săptămână:',
+    perYear: 'Pe an:',
+    mealVouchers: 'Bonuri de masă:',
+    transport: 'Transport:',
+    telework: 'Telemuncă:',
+    totalExpenses: 'Total cheltuieli:',
+    monthly: 'Lunare',
+    subscriptions: 'Abonamente',
+    dash: '—',
+    months: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'],
+  },
+  en: {
+    updateBtn: 'Check for Updates',
+    appTitle: '💰 Income Calculator',
+    saveMonth: 'Save Month',
+    langToggle: 'RO',
+    previousMonth: '← Prev Month',
+    nextMonth: 'Next Month →',
+    salaryTitle: 'Monthly Salary',
+    salaryLabel: '📅Monthly Salary',
+    additionalIncomeTitle: '💼Additional Income',
+    bonuriLabel: '🍽️ Meal Vouchers',
+    transportLabel: '🚗 Transport',
+    telemuncaLabel: '💻 Remote Work',
+    expenseTitle: 'Monthly Expenses',
+    lunareTitle: '💡 Monthly',
+    abonamenteTitle: '📱 Subscriptions',
+    addBtn: '+ Add',
+    lunareLabel: '💡 Monthly:',
+    abonamenteLabel: '📱 Subscriptions:',
+    summaryTitle: 'Financial Summary',
+    summaryWeekly: 'Weekly:',
+    summaryMonthly: 'Monthly:',
+    summaryAdditional: 'Transport + Remote Work:',
+    summaryTotal: 'Total Income:',
+    summaryAfterExpenses: 'Left After Expenses:',
+    summaryBonuriMasa: '🍽️ Meal Vouchers:',
+    historyTitle: '📊 Monthly History',
+    toggleHistory: 'Show/Hide History',
+    noHistory: 'No saved data yet.',
+    saveSuccess: '✅ Data has been saved!',
+    updateSuccess: '🎉 No new updates, everything is up to date! 🚀😎',
+    checking: 'Checking for updates...',
+    perDay: 'Per day:',
+    perWeek: 'Per week:',
+    perYear: 'Per year:',
+    mealVouchers: 'Meal Vouchers:',
+    transport: 'Transport:',
+    telework: 'Remote Work:',
+    totalExpenses: 'Total expenses:',
+    monthly: 'Monthly',
+    subscriptions: 'Subscriptions',
+    dash: '—',
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  }
+};
+
+let currentLang = localStorage.getItem('appLang') || 'ro';
+
+function translateUI() {
+  const lang = currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+        el.placeholder = translations[lang][key];
+      } else {
+        el.textContent = translations[lang][key];
+      }
+    }
+  });
+  // Update lang toggle button text
+  const langBtn = document.getElementById('langToggleBtn');
+  if (langBtn) {
+    langBtn.textContent = translations[lang].langToggle;
+    langBtn.style.color = '#111'; // Set text color to black
+  }
+
+  // Update update button text
+  const updateBtn = document.getElementById('checkUpdateBtn');
+  if (updateBtn) {
+    updateBtn.disabled = false;
+    updateBtn.textContent = translations[lang].updateBtn;
+  }
+
+  // Update previous month button text
+  const prevMonthBtn = document.querySelector('[data-i18n="prevMonth"]');
+  if (prevMonthBtn) {
+    prevMonthBtn.textContent = translations[lang].previousMonth;
+  }
+
+  // Update current month label if it has a translation key
+  const currentMonthSpan = document.querySelector('[data-i18n="currentMonth"]');
+  if (currentMonthSpan) {
+    currentMonthSpan.textContent = formatMonthDisplay();
+  }
+
+  // Re-render result sections in the new language
+  // Salary result
+  const salaryInput = document.getElementById('monthlySalary');
+  if (salaryInput && salaryInput.value && parseFloat(salaryInput.value) > 0) {
+    calculateSalary();
+  } else {
+    document.getElementById('salaryResult').innerHTML = '';
+  }
+  // Additional income result
+  const bonuriInput = document.getElementById('bonuriMasa');
+  const transportInput = document.getElementById('transport');
+  const telemuncaInput = document.getElementById('telemunca');
+  if ((bonuriInput && parseFloat(bonuriInput.value) > 0) || (transportInput && parseFloat(transportInput.value) > 0) || (telemuncaInput && parseFloat(telemuncaInput.value) > 0)) {
+    calculateAdditionalIncome();
+  } else {
+    document.getElementById('additionalIncomeResult').innerHTML = '';
+  }
+  // Expenses result
+  calculateExpenses();
+
+  // Re-render history card if visible
+  const historyContainer = document.getElementById('historyContainer');
+  if (historyContainer && historyContainer.style.display !== 'none') {
+    displayHistory();
+  }
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === 'ro' ? 'en' : 'ro';
+  localStorage.setItem('appLang', currentLang);
+  translateUI();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Language toggle button
+  const langBtn = document.getElementById('langToggleBtn');
+  if (langBtn) {
+    langBtn.addEventListener('click', toggleLanguage);
+  }
+  translateUI();
+});
 // Listen for update-not-available event and show notification (using preload API)
 if (window.electronAPI && window.electronAPI.onUpdateNotAvailable) {
   window.electronAPI.onUpdateNotAvailable(() => {
-    showPopupMessage('🎉 No new updates, everything is up to date! 🚀😎');
+    showPopupMessage(translations[currentLang].updateSuccess);
   });
 }
 
@@ -25,7 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (updateBtn && window.electronAPI && window.electronAPI.checkForUpdates) {
     updateBtn.addEventListener('click', () => {
       updateBtn.disabled = true;
-      updateBtn.textContent = 'Checking...';
+      updateBtn.textContent = translations[currentLang].checking;
       window.electronAPI.checkForUpdates();
     });
 
@@ -33,7 +206,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const resetUpdateBtn = () => {
       setTimeout(() => {
         updateBtn.disabled = false;
-        updateBtn.textContent = 'Check for Updates';
+        updateBtn.textContent = translations[currentLang].updateBtn;
       }, 2000);
     };
     if (window.electronAPI.onUpdateAvailable) window.electronAPI.onUpdateAvailable(resetUpdateBtn);
@@ -70,10 +243,8 @@ function getMonthKey(date = currentDate) {
 
 // Format month display
 function formatMonthDisplay(date = currentDate) {
-    const months = [
-        'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
-        'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
-    ];
+    const lang = currentLang;
+    const months = translations[lang].months;
     return `${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
@@ -168,14 +339,15 @@ function calculateSalary() {
     currentCalculations.monthly = monthlySalary;
     currentCalculations.annual = annualPay;
 
+    const lang = currentLang;
+    const t = translations[lang];
     const resultHTML = `
-        <div style="line-height: 1.4;">
-            <div><strong>Pe zi:</strong> ${formatRON(dailyPay)}</div>
-            <div><strong>Pe săptămână:</strong> ${formatRON(weeklyPay)}</div>
-            <div><strong>Pe an:</strong> ${formatRON(annualPay)}</div>
-        </div>
+      <div class="salary-card">
+        <div class="result-row"><span class="result-label">💸 <strong>${t.perDay}</strong></span> <span class="result-value">${formatRON(dailyPay)}</span></div>
+        <div class="result-row"><span class="result-label">📅 <strong>${t.perWeek}</strong></span> <span class="result-value">${formatRON(weeklyPay)}</span></div>
+        <div class="result-row"><span class="result-label">🗓️ <strong>${t.perYear}</strong></span> <span class="result-value">${formatRON(annualPay)}</span></div>
+      </div>
     `;
-
     document.getElementById('salaryResult').innerHTML = resultHTML;
     calculateTotalIncome();
 }
@@ -192,31 +364,18 @@ function calculateAdditionalIncome() {
     currentCalculations.telemunca = telemunca;
     currentCalculations.totalAdditional = bonuriMasa + transport + telemunca;
 
+    const lang = currentLang;
+    const t = translations[lang];
     let resultHTML = '';
-    const cashIncomeTotal = transport + telemunca;
-    
     if (currentCalculations.totalAdditional > 0) {
-        // Detect dark theme (by data-theme attribute or currentTheme variable)
-        let isDarkTheme = false;
-        if (typeof document !== 'undefined') {
-            const themeAttr = document.documentElement.getAttribute('data-theme');
-            isDarkTheme = themeAttr && (themeAttr.includes('dark') || themeAttr === 'forest' || themeAttr === 'ocean' || themeAttr === 'sunset');
-        } else {
-            isDarkTheme = currentTheme && (currentTheme.includes('dark') || currentTheme === 'forest' || currentTheme === 'ocean' || currentTheme === 'sunset');
-        }
-        const detailColor = isDarkTheme ? '#fff' : '#6c757d';
-    resultHTML = `
-        <div style="line-height: 1.4;">
-            <div><strong>Total suplimentar:</strong> ${formatRON(currentCalculations.totalAdditional)}</div>
-            <div style="margin-top: 8px; font-size: 0.95em; color: ${detailColor};">
-                ${bonuriMasa > 0 ? `<div style='display: flex; align-items: center; gap: 12px;'><span>Bonuri de masă</span><span style='font-weight: 500;'>${formatRON(bonuriMasa)}</span></div>` : ''}
-                ${transport > 0 ? `<div style='display: flex; align-items: center; gap: 12px;'><span>Transport</span><span style='font-weight: 500;'>${formatRON(transport)}</span></div>` : ''}
-                ${telemunca > 0 ? `<div style='display: flex; align-items: center; gap: 12px;'><span>Telemuncă</span><span style='font-weight: 500;'>${formatRON(telemunca)}</span></div>` : ''}
-            </div>
+      resultHTML = `
+        <div class="additional-card">
+          ${bonuriMasa > 0 ? `<div class="result-row"><span class="result-label">🍽️ <strong>${t.mealVouchers}</strong></span> <span class="result-value">${formatRON(bonuriMasa)}</span></div>` : ''}
+          ${transport > 0 ? `<div class="result-row"><span class="result-label">🚗 <strong>${t.transport}</strong></span> <span class="result-value">${formatRON(transport)}</span></div>` : ''}
+          ${telemunca > 0 ? `<div class="result-row"><span class="result-label">💻 <strong>${t.telework}</strong></span> <span class="result-value">${formatRON(telemunca)}</span></div>` : ''}
         </div>
-    `;
+      `;
     }
-
     document.getElementById('additionalIncomeResult').innerHTML = resultHTML;
     calculateTotalIncome();
 }
@@ -240,17 +399,15 @@ function addExpense(listId = 'expenseListAbonamente') {
         <button type="button" class="remove-btn" onclick="removeExpenseRow(this)">×</button>
     `;
     expenseList.appendChild(expenseRow);
-    
-    // Set up drag and drop for the new row
-    setupRowDragAndDrop(expenseRow);
-    
-    // Focus on the name input of the new item
-    expenseRow.querySelector('.expense-name').focus();
     // Add event listeners for real-time calculation to both inputs
     const nameInput = expenseRow.querySelector('.expense-name');
     const amountInput = expenseRow.querySelector('.expense-amount');
     nameInput.addEventListener('input', calculateExpenses);
     amountInput.addEventListener('input', calculateExpenses);
+    // Set up drag and drop for the new row
+    setupRowDragAndDrop(expenseRow);
+    // Focus on the name input of the new item
+    nameInput.focus();
 }
 
 // Remove expense item (fixed function name)
@@ -293,30 +450,32 @@ function calculateExpenses() {
     currentCalculations.totalExpenses = total;
 
 
-    // Two-column summary layout
-    resultHTML = `
-        <div style="display: flex; flex-direction: column;">
-            <strong style="font-size: 1.08em; margin-bottom: 8px;">Total cheltuieli: ${formatRON(total)}</strong>
-            <hr style="margin: 0 0 0 0; border: none; border-bottom: 1.5px solid #b3c6e0; opacity: 0.35;"> 
+    // Modern section cards for expense summary (no outer box)
+    const lang = currentLang;
+    const t = translations[lang];
+    let resultHTML = `
+      <div style="font-size: 1.18em; font-weight: 700; color: #b86b00; margin-bottom: 12px; letter-spacing: 0.01em;">
+        <span style='font-size:1.2em;'>💸</span> ${t.totalExpenses} <span style='color:#e67e22;'>${formatRON(total)}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div style="background: #f7fbe7; border-radius: 10px; padding: 14px 16px 10px 16px; box-shadow: 0 1px 4px rgba(180,220,120,0.07); border: 1px solid #e0eec0;">
+          <div style="font-weight: 600; color: #7a9c1c; font-size: 1.05em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span style='font-size:1.1em;'>💡</span> ${t.monthly}: <span style='color:#7a9c1c;'>${formatRON(lunareTotal)}</span>
+          </div>
+          <ul style="margin: 0; padding-left: 18px; font-size: 0.97em; color: #5a5a5a;">
+            ${lunareList.length > 0 ? lunareList.map(expense => `<li>${expense.name}: <span style='color:#7a9c1c;'>${formatRON(expense.amount)}</span></li>`).join('') : `<li style=\"color:#bbb;\">${t.dash}</li>`}
+          </ul>
         </div>
-    `;
-    resultHTML += `
-        <div class="history-summary-grid">
-            <div class="history-summary-col">
-                <div style="margin-bottom: 6px;"><strong>💡 Lunare: ${formatRON(lunareTotal)}</strong></div>
-                <div style="font-size: 0.85rem; line-height: 1.3;">
-                    ${lunareList.map(expense => `• ${expense.name}: ${formatRON(expense.amount)}`).join('<br>')}
-                </div>
-            </div>
-            <div class="history-summary-col">
-                <div style="margin-bottom: 6px;"><strong>📱 Abonamente: ${formatRON(abonamenteTotal)}</strong></div>
-                <div style="font-size: 0.85rem; line-height: 1.3;">
-                    ${abonamenteList.map(expense => `• ${expense.name}: ${formatRON(expense.amount)}`).join('<br>')}
-                </div>
-            </div>
+        <div style="background: #f0f6ff; border-radius: 10px; padding: 14px 16px 10px 16px; box-shadow: 0 1px 4px rgba(120,180,220,0.07); border: 1px solid #c0d8ee;">
+          <div style="font-weight: 600; color: #1c6c9c; font-size: 1.05em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span style='font-size:1.1em;'>📱</span> ${t.subscriptions}: <span style='color:#1c6c9c;'>${formatRON(abonamenteTotal)}</span>
+          </div>
+          <ul style="margin: 0; padding-left: 18px; font-size: 0.97em; color: #5a5a5a;">
+            ${abonamenteList.length > 0 ? abonamenteList.map(expense => `<li>${expense.name}: <span style='color:#1c6c9c;'>${formatRON(expense.amount)}</span></li>`).join('') : `<li style=\"color:#bbb;\">${t.dash}</li>`}
+          </ul>
         </div>
+      </div>
     `;
-
     document.getElementById('expenseResult').innerHTML = resultHTML;
     updateSummary();
 }
@@ -352,38 +511,44 @@ function clearAllFields() {
     const expenseListLunare = document.getElementById('expenseListLunare');
     expenseListLunare.innerHTML = `
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Chirie" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Chirie">
             <input type="number" class="expense-amount" placeholder="0" step="0.01">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Gaz" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Gaz">
             <input type="number" class="expense-amount" placeholder="0" step="0.01">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Curent" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Curent">
             <input type="number" class="expense-amount" placeholder="0" step="0.01">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Întreținere" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Întreținere">
             <input type="number" class="expense-amount" placeholder="0" step="0.01">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
     `;
     
     const expenseListAbonamente = document.getElementById('expenseListAbonamente');
     expenseListAbonamente.innerHTML = `
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Netflix" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Netflix">
             <input type="number" class="expense-amount" placeholder="60" step="0.01" value="60">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
         <div class="expense-row">
-            <input type="text" class="expense-name" value="Spotify" readonly>
+            <span class="drag-handle" draggable="true">⋮⋮</span>
+            <input type="text" class="expense-name" value="Spotify">
             <input type="number" class="expense-amount" placeholder="20" step="0.01">
-            <button class="remove-btn" onclick="removeExpense(this)">×</button>
+            <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
         </div>
     `;
     
@@ -506,26 +671,44 @@ function saveCurrentMonth() {
         }
     };
     
-    // Collect expense data
-    document.querySelectorAll('#expenseListLunare .expense-row').forEach(row => {
-        const name = row.querySelector('.expense-name').value;
-        const amount = parseFloat(row.querySelector('.expense-amount').value) || 0;
+    // Force DOM reflow to ensure all new rows are present
+    void document.body.offsetHeight;
+    // Collect expense data robustly
+    const lunareRows = Array.from(document.querySelectorAll('#expenseListLunare .expense-row'));
+    const abonamenteRows = Array.from(document.querySelectorAll('#expenseListAbonamente .expense-row'));
+    console.log('Found lunareRows:', lunareRows);
+    console.log('Found abonamenteRows:', abonamenteRows);
+    if (lunareRows.length === 0 && abonamenteRows.length === 0) {
+        console.warn('No expense rows found in DOM.');
+    }
+    lunareRows.forEach(row => {
+        const nameInput = row.querySelector('.expense-name');
+        const amountInput = row.querySelector('.expense-amount');
+        if (!nameInput || !amountInput) return;
+        const name = nameInput.value.trim();
+        const amount = parseFloat(amountInput.value) || 0;
         if (name && amount > 0) {
             monthData.expenses.lunare.push({ name, amount });
         }
     });
-    
-    document.querySelectorAll('#expenseListAbonamente .expense-row').forEach(row => {
-        const name = row.querySelector('.expense-name').value;
-        const amount = parseFloat(row.querySelector('.expense-amount').value) || 0;
+    abonamenteRows.forEach(row => {
+        const nameInput = row.querySelector('.expense-name');
+        const amountInput = row.querySelector('.expense-amount');
+        if (!nameInput || !amountInput) return;
+        const name = nameInput.value.trim();
+        const amount = parseFloat(amountInput.value) || 0;
         if (name && amount > 0) {
             monthData.expenses.abonamente.push({ name, amount });
         }
     });
+    // Debug log
+    console.log('Lunare expenses collected:', monthData.expenses.lunare);
+    console.log('Abonamente expenses collected:', monthData.expenses.abonamente);
     
     historyData[monthKey] = monthData;
     localStorage.setItem('incomeHistory', JSON.stringify(historyData));
-    
+    // Immediately reload historyData from localStorage to keep in sync
+    historyData = JSON.parse(localStorage.getItem('incomeHistory')) || {};
     // Show confirmation
     showNotification('✅ Datele pentru ' + formatMonthDisplay() + ' au fost salvate!');
 }
@@ -662,6 +845,8 @@ function displayHistory() {
         return;
     }
     
+    const lang = currentLang;
+    const t = translations[lang];
     historyList.innerHTML = sortedHistory.map(([monthKey, data]) => {
         const date = new Date(monthKey + '-01');
         const monthName = formatMonthDisplay(date);
@@ -676,11 +861,11 @@ function displayHistory() {
                 <div class="history-month-table" style="display: grid; grid-template-columns: 1fr 1px 1fr; align-items: center;">
                     <div>
                         <div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;">
-                            <span class="history-label">Salariu</span>
+                            <span class="history-label">${t.salaryLabel || 'Salariu'}</span>
                         </div>
-                        ${additionalTotal > 0 ? `<div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">Venituri suplimentare</span></div>` : ''}
-                        <div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">Cheltuieli Lunare</span></div>
-                        <div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">Abonamente</span></div>
+                        ${additionalTotal > 0 ? `<div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">${t.additionalIncomeTitle || 'Venituri suplimentare'}</span></div>` : ''}
+                        <div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">${t.lunareTitle || 'Lunare'}</span></div>
+                        <div class="history-month-row" style="display: flex; justify-content: flex-start; padding-left: 8px;"><span class="history-label">${t.abonamenteTitle || 'Abonamente'}</span></div>
                     </div>
                     <div style="width: 0; border-left: 1.5px solid #b3c6e0; opacity: 0.2; height: 100%; margin: 0 8px;"></div>
                     <div>
@@ -694,11 +879,11 @@ function displayHistory() {
                 </div>
                 <hr style="margin: 8px 0; border: none; border-top: 1.5px solid #b3c6e0; opacity: 0.55;">
                 <div class="history-month-row history-row-grid">
-                    <span class="history-label" style="font-weight: bold;">Total Cheltuieli</span>
+                    <span class="history-label" style="font-weight: bold;">${t.totalExpenses}</span>
                     <span class="history-value total-expenses" style="color: #e67e22; font-weight: bold;">${formatRON(data.calculations.totalExpenses)}</span>
                 </div>
                 <div class="history-month-row history-row-grid">
-                    <span class="history-label" style="font-weight: bold;">Rămas</span>
+                    <span class="history-label" style="font-weight: bold;">${t.summaryAfterExpenses || 'Rămas'}</span>
                     <span class="history-value remaining"><strong>${formatRON(afterExpenses)}</strong></span>
                 </div>
             </div>
@@ -807,18 +992,10 @@ let placeholder = null;
 
 function setupDragAndDrop() {
     console.log('Setting up advanced drag and drop system...');
-    
-    // Remove any existing listeners first
-    document.querySelectorAll('.expense-row').forEach(row => {
-        const newRow = row.cloneNode(true);
-        row.parentNode.replaceChild(newRow, row);
-    });
-    
-    // Add fresh listeners to all rows
+    // Only add listeners, do not replace DOM nodes (which breaks input references)
     document.querySelectorAll('.expense-row').forEach(row => {
         setupRowDragAndDrop(row);
     });
-    
     console.log('Advanced drag and drop system ready');
 }
 
@@ -1015,6 +1192,3 @@ function applyTheme(themeName) {
 // Charts Management Functions - Removed as per request
 
 // Add event listeners to ALL expense inputs for real-time calculation - Repeated code removed
-document.querySelectorAll('.expense-row input').forEach(input => {
-    input.addEventListener('input', calculateExpenses);
-});

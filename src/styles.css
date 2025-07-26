@@ -1,3 +1,61 @@
+/* --- Result Card Styles (no background) --- */
+.salary-card, .additional-card {
+  padding: 0;
+  margin: 10px 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.08em;
+  margin-bottom: 2px;
+}
+.result-label {
+  color: #3a3a3a;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.result-value {
+  color: #111;
+  font-weight: 600;
+  font-size: 1.08em;
+  margin-left: 10px;
+}
+/* removed stray font-size and brace */
+@media (max-width: 600px) {
+  .salary-card, .additional-card {
+    font-size: 0.98em;
+  }
+}
+/* Language toggle button - elegant, subtle, modern, extra transparent, no border, matches other button height */
+/* Language toggle button - match other button height (31px) and padding */
+.lang-btn {
+  background: rgba(245, 246, 250, 0.45);
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 18px;
+  height: 33px;
+  line-height: 23px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.04);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(7px) saturate(1.1);
+  margin-top: 0;
+  font-size: 1em;
+  color: #6c757d;
+  justify-content: center;
+}
+.lang-btn:hover {
+  background: rgba(227, 230, 237, 0.38);
+  box-shadow: 0 4px 16px rgba(33,150,243,0.3);
+}
 /* =========================
    POPUP MESSAGE STYLES
 ========================= */

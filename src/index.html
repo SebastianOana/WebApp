@@ -22,14 +22,17 @@
                     <option value="ocean">Ocean</option>
                     <option value="sunset">Apus</option>
                 </select>
-                <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Update?</button>
-                <button class="save-btn" onclick="saveCurrentMonth()">Salvează Luna</button>
+                <button id="langToggleBtn" class="lang-btn" title="Change Language" data-i18n="langToggle">EN</button>
+                <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+                  <button id="checkUpdateBtn" class="update-btn" title="Check for Updates">Verifică Actualizările</button>
+                  <button class="save-btn" onclick="saveCurrentMonth()" data-i18n="saveMonth">Salvează Luna</button>
+                </div>
             </div>
-            <h1>💰 Calculator Venituri</h1>
+            <h1 data-i18n="appTitle">💰 Calculator Venituri</h1>
             <div class="month-controls">
-                <button class="month-btn" onclick="previousMonth()">← Luna Anterioară</button>
+                <button class="month-btn" onclick="previousMonth()" data-i18n="prevMonth">← Luna Anterioară</button>
                 <span class="current-month" id="currentMonth"></span>
-                <button class="month-btn" onclick="nextMonth()">Luna Următoare →</button>
+                <button class="month-btn" onclick="nextMonth()" data-i18n="nextMonth">Luna Următoare →</button>
             </div>
         </header>
 
@@ -37,100 +40,94 @@
             <div class="calculator-grid">
                 <!-- Monthly Salary Calculator -->
                 <div class="card">
-                    <h3>Salariu Lunar</h3>
+                    <h3 data-i18n="salaryTitle">Salariu Lunar</h3>
                     <div class="input-group">
-                        <label for="monthlySalary">Salariu Lunar (RON)</label>
+                        <label for="monthlySalary" data-i18n="salaryLabel">📅Salariu Lunar</label>
                         <input type="number" id="monthlySalary" placeholder="0" step="100">
                     </div>
                     <div class="result" id="salaryResult"></div>
-                    
                     <!-- Additional Income in same card -->
                     <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e9ecef;">
-                        <h4 style="margin-bottom: 15px; font-size: 1rem;">Venituri Suplimentare</h4>
-                        
+                        <h4 style="margin-bottom: 15px; font-size: 1rem;" data-i18n="additionalIncomeTitle">Venituri Suplimentare</h4>
                         <div class="input-group">
-                            <label for="bonuriMasa">🍽️ Bonuri de masă (RON)</label>
+                            <label for="bonuriMasa" data-i18n="bonuriLabel">🍽️ Bonuri de masă</label>
                             <input type="number" id="bonuriMasa" placeholder="0" step="50">
                         </div>
-                        
                         <div class="input-group">
-                            <label for="transport">🚗 Transport (RON)</label>
+                            <label for="transport" data-i18n="transportLabel">🚗 Transport</label>
                             <input type="number" id="transport" placeholder="0" step="50">
                         </div>
-                        
                         <div class="input-group">
-                            <label for="telemunca">💻 Telemuncă (RON)</label>
+                            <label for="telemunca" data-i18n="telemuncaLabel">💻 Telemuncă</label>
                             <input type="number" id="telemunca" placeholder="0" step="50">
                         </div>
-                        
-                            <div class="result additional-income-data" id="additionalIncomeResult"></div>
+                        <div class="result additional-income-data" id="additionalIncomeResult"></div>
                     </div>
                 </div>
 
                 <!-- Expense Tracker -->
                 <div class="card wide">
-                    <h3>Cheltuieli Lunare</h3>
-                    
+                    <h3 data-i18n="expenseTitle">Cheltuieli Lunare</h3>
                     <!-- Lunare Section -->
                     <div class="expense-section">
-                        <h4>💡 Lunare</h4>
+                        <h4 data-i18n="lunareTitle">💡 Lunare</h4>
                         <div class="expense-grid" id="expenseListLunare">
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Chirie">
                                 <input type="number" class="expense-amount" placeholder="0" step="0.01">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Gaz">
                                 <input type="number" class="expense-amount" placeholder="0" step="0.01">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Curent">
                                 <input type="number" class="expense-amount" placeholder="0" step="0.01">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Întreținere">
                                 <input type="number" class="expense-amount" placeholder="0" step="0.01">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                         </div>
-                        <button class="add-btn" onclick="addExpense('expenseListLunare')">+ Adaugă</button>
+                        <button class="add-btn" onclick="addExpense('expenseListLunare')" data-i18n="addBtn">+ Adaugă</button>
                     </div>
 
                     <!-- Abonamente Section -->
                     <div class="expense-section">
-                        <h4>📱 Abonamente</h4>
+                        <h4 data-i18n="abonamenteTitle">📱 Abonamente</h4>
                         <div class="expense-grid" id="expenseListAbonamente">
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Netflix">
                                 <input type="number" class="expense-amount" placeholder="60" step="0.01" value="60">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                             <div class="expense-row">
                                 <span class="drag-handle" draggable="true">⋮⋮</span>
                                 <input type="text" class="expense-name" value="Spotify">
                                 <input type="number" class="expense-amount" placeholder="20" step="0.01">
-                                <button class="remove-btn" onclick="removeExpense(this)">×</button>
+                                <button class="remove-btn" onclick="removeExpenseRow(this)">×</button>
                             </div>
                         </div>
-                        <button class="add-btn" onclick="addExpense('expenseListAbonamente')">+ Adaugă</button>
+                        <button class="add-btn" onclick="addExpense('expenseListAbonamente')" data-i18n="addBtn">+ Adaugă</button>
                     </div>
 
                     <div class="result" id="expenseResult">
                         <div class="cheltuieli-breakdown">
                             <div class="lunare-block">
-                                <span class="chelt-label">💡 Lunare: <span id="lunareTotal">0 RON</span></span>
+                                <span class="chelt-label" data-i18n="lunareLabel">💡 Lunare: <span id="lunareTotal">0 RON</span></span>
                                 <ul id="lunareList" style="margin:0; padding-left:18px;"></ul>
                             </div>
                             <div class="abonamente-block">
-                                <span class="chelt-label">📱 Abonamente: <span id="abonamenteTotal">0 RON</span></span>
+                                <span class="chelt-label" data-i18n="abonamenteLabel">📱 Abonamente: <span id="abonamenteTotal">0 RON</span></span>
                                 <ul id="abonamenteList" style="margin:0; padding-left:18px;"></ul>
                             </div>
                         </div>
@@ -140,30 +137,30 @@
 
             <!-- Summary Section -->
             <div class="summary-section">
-                <h3>Sumar Financiar</h3>
+                <h3 data-i18n="summaryTitle">Sumar Financiar</h3>
                 <div class="summary-grid">
                     <div class="summary-item" id="summaryItemWeekly">
-                        <span class="summary-label">Săptămânal:</span>
+                        <span class="summary-label" data-i18n="summaryWeekly">Săptămânal:</span>
                         <span class="summary-value" id="summaryWeekly">0 RON</span>
                     </div>
                     <div class="summary-item" id="summaryItemMonthly">
-                        <span class="summary-label">Lunar:</span>
+                        <span class="summary-label" data-i18n="summaryMonthly">Lunar:</span>
                         <span class="summary-value" id="summaryMonthly">0 RON</span>
                     </div>
                     <div class="summary-item" id="summaryItemAdditional">
-                        <span class="summary-label">Transport + Telemuncă:</span>
+                        <span class="summary-label" data-i18n="summaryAdditional">Transport + Telemuncă:</span>
                         <span class="summary-value" id="summaryAdditional">0 RON</span>
                     </div>
                     <div class="summary-item" id="summaryItemTotal">
-                        <span class="summary-label">Total venituri:</span>
+                        <span class="summary-label" data-i18n="summaryTotal">Total venituri:</span>
                         <span class="summary-value" id="summaryTotal">0 RON</span>
                     </div>
                     <div class="summary-item highlight" id="summaryItemAfterExpenses">
-                        <span class="summary-label">Rămas după cheltuieli:</span>
+                        <span class="summary-label" data-i18n="summaryAfterExpenses">Rămas după cheltuieli:</span>
                         <span class="summary-value" id="summaryAfterExpenses">0 RON</span>
                     </div>
                     <div class="summary-item voucher-highlight" id="summaryItemBonuriMasa">
-                        <span class="summary-label">🍽️ Bonuri de masă:</span>
+                        <span class="summary-label" data-i18n="summaryBonuriMasa">🍽️ Bonuri de masă:</span>
                         <span class="summary-value" id="summaryBonuriMasa">0 RON</span>
                     </div>
                 </div>
@@ -171,13 +168,13 @@
 
             <!-- History Section -->
             <div class="history-section">
-                <h3>📊 Istoric Lunar</h3>
+                <h3 data-i18n="historyTitle">📊 Istoric Lunar</h3>
                 <div class="history-controls">
-                    <button class="history-btn" onclick="toggleHistory()">Afișează/Ascunde Istoric</button>
+                    <button class="history-btn" onclick="toggleHistory()" data-i18n="toggleHistory">Afișează/Ascunde Istoric</button>
                 </div>
                 <div class="history-container" id="historyContainer" style="display: none;">
                     <div class="history-list" id="historyList">
-                        <p class="no-history">Nu există date salvate încă.</p>
+                        <p class="no-history" data-i18n="noHistory">Nu există date salvate încă.</p>
                     </div>
                 </div>
             </div>
