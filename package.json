@@ -33,7 +33,8 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis"
+    "target": "nsis",
+    "artifactName": "Income-Calculator-Setup.${ext}"
     },
     "nsis": {
       "oneClick": false,
